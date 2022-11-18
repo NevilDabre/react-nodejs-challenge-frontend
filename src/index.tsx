@@ -4,10 +4,12 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Home from "./routes/home";
-import Login from "./routes/login";
-import Register from "./routes/register";
+import Home from "./pages/home";
+import Login from "./pages/login";
+import Register from "./pages/register";
 import { ChakraProvider } from "@chakra-ui/react";
+import { Provider } from "react-redux";
+import store from "./store"
 
 
 const router = createBrowserRouter([
@@ -30,9 +32,10 @@ const router = createBrowserRouter([
 
 
 ReactDOM.createRoot(document.getElementById("root") as Element).render(
-  <React.StrictMode>
+  
+  <Provider store={store}>
     <ChakraProvider>
-      <RouterProvider router={router} />
+      <RouterProvider router={router}></RouterProvider>
     </ChakraProvider>
-  </React.StrictMode>
+  </Provider>
 );

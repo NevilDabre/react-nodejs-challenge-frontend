@@ -43,21 +43,21 @@ export default function Register () {
           <Text>Informe seu nome, email e senha para registrar</Text>
         </VStack>
         <form onSubmit={submitHandler}>
-          <FormControl>
+          <FormControl pb={5}>
             <FormLabel>Nome</FormLabel>
             <Input rounded='none' variant='filled' placeholder="Digite seu nome"
               value={name}
               onChange={e => setName(e.target.value)}
             ></Input>
           </FormControl>
-          <FormControl>
+          <FormControl pb={5}>
             <FormLabel>Endereço de email</FormLabel>
             <Input rounded='none' variant='filled' type='email' placeholder="Digite seu email"
               value={email}
               onChange={e => setEmail(e.target.value)}
             ></Input>
           </FormControl>
-          <FormControl>
+          <FormControl pb={5}>
             <FormLabel>Senha</FormLabel>
             <Input rounded='none' variant='filled' type='password' placeholder="Digite sua senha"
               value={password}

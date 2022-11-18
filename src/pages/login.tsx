@@ -1,31 +1,24 @@
 import { Box, Button, FormControl, FormLabel, Heading, Input, Text, VStack } from "@chakra-ui/react";
 import { SyntheticEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../actions/userAction";
 
 export default function Login () {
   
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  const dispatch = useDispatch();
+
   let navigate = useNavigate();
 
   const submitHandler = async (e: SyntheticEvent) => {
     e.preventDefault()
-    console.log('submitted')
-    await fetch('http://localhost:8000/session', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      credentials: 'include',
-      body: JSON.stringify({
-        email,
-        password
-      })
-    });
-
+    await dispatch(login(email, password))
     navigate('/');
     
   }
-
   return (
     <Box
       w={['full', 'md']}
@@ -42,14 +35,14 @@ export default function Login () {
           <Text>Insira seu email e senha para entrar</Text>
         </VStack>
         <form onSubmit={submitHandler}>
-          <FormControl>
+          <FormControl pb={5}>
             <FormLabel>Endereço de email</FormLabel>
             <Input rounded='none' variant='filled' type='email' placeholder="Digite seu email"
               value={email}
               onChange={e => setEmail(e.target.value)}
             ></Input>
           </FormControl>
-          <FormControl>
+          <FormControl pb={5}>
             <FormLabel>Senha</FormLabel>
             <Input rounded='none' variant='filled' type='password' placeholder="Digite sua senha"
               value={password}
