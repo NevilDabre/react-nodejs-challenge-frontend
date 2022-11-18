@@ -1,27 +1,27 @@
-import { Box, Button, Heading, HStack, Link, Stack, StackDivider, Input, FormControl, FormLabel, Flex, Spacer } from "@chakra-ui/react";
+import { Box, Button, Heading, Input, FormControl, FormLabel, Flex, Spacer } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
-import { RootState } from "../store";
-import { UserState } from "../reducers/userReducer";
 import { useEffect, useState } from "react";
 import { createPost, listPosts } from "../services/api";
 import Post from "../components/Post";
-import { logout } from "../actions/userAction";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { RootState } from "../store";
+import { logout } from "../store/slices/user";
 
 export default function Home () {
 
-  const userLogin = useSelector<RootState, UserState>(
-    (state: RootState) => {
-      return state.userLogin});
+
+  const userData: any = useSelector<RootState>((state) => state.user)
+  console.log(userData)
   
   
-  const { userInfoFromStorage } = userLogin;
-  const name = userInfoFromStorage ? userInfoFromStorage.name : null; 
-  const token = userInfoFromStorage ? userInfoFromStorage.token : null; 
 
   const [posts, setPosts] = useState<any[]>([]);
   const [postContent, setPostContent] = useState('')
+
+  const token = userData.user.accessToken
+  const name = userData.user.name
+
   
   const handlePosts = async () => {
     if(token){
@@ -37,7 +37,7 @@ export default function Home () {
   let navigate = useNavigate();
 
   const handleLogout = () => {
-    dispatch(logout())
+    dispatch(logout({}))
     navigate('/');
   }
 
@@ -48,7 +48,7 @@ export default function Home () {
     }
   }
 
-  return name ? (
+  return (
     <>
       <Spacer/>
       <Flex bgColor='black' display='flex' width='full' alignItems='flex-end'>
@@ -86,30 +86,5 @@ export default function Home () {
         </Box>
       }
     </>
-  )
-  :
-  (
-    <Box
-      w={['full', 'md']}
-      p={[8, 10]}
-      mt={[20, '10vh']}
-      mx={'auto'}
-      border={['none', '1px']}
-      borderColor={['', 'gray.300']}
-      borderRadius={10}
-    >
-      <Stack divider={<StackDivider />} spacing='4'>
-        <Heading>Welcome to PostIt</Heading>
-        <HStack>
-          <Link  href="/login">
-            <Button colorScheme='blue'>Entrar</Button>
-          </Link>
-          <Link href="/register">
-            <Button colorScheme='blue'>Registrar</Button>
-          </Link>
-        </HStack>
-      </Stack>
-
-    </Box>
   )
 }

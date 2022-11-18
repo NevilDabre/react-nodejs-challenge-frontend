@@ -2,7 +2,6 @@ import { Card, CardHeader, CardBody, Stack, StackDivider, Box, Text, Button } fr
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
-import { UserState } from "../reducers/userReducer";
 import { deletePost } from "../services/api";
 
 type Props ={
@@ -14,12 +13,10 @@ type Props ={
 
 const Post = ({ content, postUserId, postId, onSuccess }: Props) => {
 
-  const userLogin = useSelector<RootState, UserState>(
-    (state: RootState) => {
-      return state.userLogin});
-  const { userInfoFromStorage } = userLogin;
-  const userId = userInfoFromStorage ? userInfoFromStorage.id : null; 
-  const token = userInfoFromStorage ? userInfoFromStorage.token : null;
+  const userData: any = useSelector<RootState>((state) => state.user)
+  const userId = userData.user.id; 
+  const token = userData.user.accessToken; 
+
   async function handleDelete () {
     if(token) {
       await deletePost(token, postId);

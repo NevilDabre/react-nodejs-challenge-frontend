@@ -10,11 +10,17 @@ import Register from "./pages/register";
 import { ChakraProvider } from "@chakra-ui/react";
 import { Provider } from "react-redux";
 import store from "./store"
+import Start from "./pages/start";
 
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <Start />,
+    errorElement: <h1>Erro</h1>,
+  },
+  {
+    path: "home",
     element: <Home />,
     errorElement: <h1>Erro</h1>,
   },
@@ -32,7 +38,7 @@ const router = createBrowserRouter([
 
 
 ReactDOM.createRoot(document.getElementById("root") as Element).render(
-  
+
   <Provider store={store}>
     <ChakraProvider>
       <RouterProvider router={router}></RouterProvider>

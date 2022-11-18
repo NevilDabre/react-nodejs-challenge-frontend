@@ -3,6 +3,7 @@ import { SyntheticEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../actions/userAction";
+import { login as userLogin } from "../store/slices/user"
 
 export default function Login () {
   
@@ -15,8 +16,9 @@ export default function Login () {
 
   const submitHandler = async (e: SyntheticEvent) => {
     e.preventDefault()
-    await dispatch(login(email, password))
-    navigate('/');
+    const data = await login(email, password)
+    dispatch(userLogin(data))
+    navigate('/home');
     
   }
   return (
