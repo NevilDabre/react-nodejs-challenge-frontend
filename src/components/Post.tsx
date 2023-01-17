@@ -3,7 +3,7 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { deletePost } from "../services/api";
-
+import { useState } from React;
 type Props ={
   content: string;
   postUserId: number;
@@ -16,6 +16,9 @@ const Post = ({ content, postUserId, postId, onSuccess }: Props) => {
   const userData: any = useSelector<RootState>((state) => state.user)
   const userId = userData.user.id; 
   const token = userData.user.accessToken; 
+//   postUserId = 7;
+  useState(()=>{
+  })
 
   async function handleDelete () {
     if(token) {
